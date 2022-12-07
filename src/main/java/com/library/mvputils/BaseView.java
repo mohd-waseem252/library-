@@ -7,6 +7,8 @@ import com.vaadin.flow.router.BeforeLeaveEvent;
 import com.vaadin.flow.router.BeforeLeaveObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
+
 public abstract class BaseView<P extends Presenter> extends VerticalLayout implements View<P>, BeforeEnterObserver, BeforeLeaveObserver {
 
     @Autowired
@@ -17,9 +19,11 @@ public abstract class BaseView<P extends Presenter> extends VerticalLayout imple
         return presenter;
     }
 
+    @PostConstruct
     private void postConstruct(){
         if(presenter!=null){
             presenter.setView(this);
+            init();
             presenter.beforeViewInit();
             presenter.afterViewInit();
         }

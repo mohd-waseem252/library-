@@ -1,6 +1,8 @@
 package com.library.entity;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Table(name = "tbl_books")
 public class Book {
 
     @Id
@@ -26,10 +29,11 @@ public class Book {
     private LocalDate publicationDate;
     private Long copiesAvailable;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private BookCategory category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @ManyToOne
+    @LazyCollection(value =LazyCollectionOption.TRUE)
+    private BookingHistory bookingHistory;
 
 }

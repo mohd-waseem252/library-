@@ -7,10 +7,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Data
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Getter
 @Table(name = "tbl_user"
         ,uniqueConstraints = @UniqueConstraint(
                              name = "emailid_unique",columnNames = "email_id"))
@@ -32,9 +32,6 @@ public class User {
     private String password;
     private LocalDate joinedDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Book> books;
-
-
-
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<BookingHistory> orders;
 }

@@ -39,13 +39,17 @@ public class MainView extends BaseView<LoginPresenter> {
 
     private H1 heading;
 
-    private Dialog loginForm;
+    private Dialog userLoginForm;
+
+    private Dialog adminLoginForm;
 
     private Dialog signupForm;
 
     private Button loginButton;
 
     private Button signupButton;
+
+    private Button forAdmin;
 
     private TextField firstNameField;
     private TextField lastNameField;
@@ -61,7 +65,6 @@ public class MainView extends BaseView<LoginPresenter> {
 
 
     @Override
-    @PostConstruct
     protected void init() {
         setAlignItems(Alignment.CENTER);
         initializeMainFields();
@@ -96,7 +99,7 @@ public class MainView extends BaseView<LoginPresenter> {
 
                     signupForm.close();
                     Notification.show("Successfully Added Please Login",2000, Notification.Position.TOP_END).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-                    loginForm.open();
+                    userLoginForm.open();
                 } catch (ValidationException e) {
                     e.printStackTrace();
                 }
@@ -106,10 +109,15 @@ public class MainView extends BaseView<LoginPresenter> {
     }
 
     private void setUpLoginInDialog() {
-        loginForm=new Dialog(loginDialogLayout());
-        loginForm.setDraggable(false);
-        loginForm.setWidth(30,Unit.PERCENTAGE);
-        loginForm.setHeight(50,Unit.PERCENTAGE);
+        userLoginForm =new Dialog(userLoginDialogLayout());
+        userLoginForm.setDraggable(false);
+        userLoginForm.setWidth(30,Unit.PERCENTAGE);
+        userLoginForm.setHeight(50,Unit.PERCENTAGE);
+
+        adminLoginForm =new Dialog(adminLoginDialogLayout());
+        adminLoginForm.setDraggable(false);
+        adminLoginForm.setWidth(30,Unit.PERCENTAGE);
+        adminLoginForm.setHeight(50,Unit.PERCENTAGE);
 
 
     }
@@ -120,15 +128,36 @@ public class MainView extends BaseView<LoginPresenter> {
         signupForm.setWidth(25,Unit.PERCENTAGE);
         signupForm.setHeight(60,Unit.PERCENTAGE);
     }
-    private VerticalLayout loginDialogLayout() {
+    private VerticalLayout userLoginDialogLayout() {
 
         LoginForm form = new LoginForm();
         form.addLoginListener(event -> {
             if(loginPresenter.userExists(event.getUsername(),event.getPassword())) {
-                loginForm.close();
+                userLoginForm.close();
+                form.getUI().ifPresent(ui -> ui.navigate("home"));
                 Notification.show("Successfully LoggedIn",3000, Notification.Position.TOP_END).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
             }else{
                 Notification.show("Incorrect Username or Password",3000, Notification.Position.MIDDLE).addThemeVariants(NotificationVariant.LUMO_ERROR);
+                form.setEnabled(true);
+            }
+        });
+        Div div=new Div(form);
+        div.getStyle().set("margin","auto");
+
+        VerticalLayout layout=new VerticalLayout(div);
+        return layout;
+    }
+
+    private VerticalLayout adminLoginDialogLayout() {
+
+        LoginForm form = new LoginForm();
+        form.addLoginListener(event -> {
+            if(loginPresenter.adminExists(event.getUsername(),event.getPassword())) {
+                adminLoginForm.close();
+                form.getUI().ifPresent(ui-> ui.navigate("home"));
+                Notification.show("Successfully LoggedIn",1500, Notification.Position.TOP_END).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+            }else{
+                Notification.show("Incorrect Username or Password",1500, Notification.Position.MIDDLE).addThemeVariants(NotificationVariant.LUMO_ERROR);
                 form.setEnabled(true);
             }
         });
@@ -196,7 +225,7 @@ public class MainView extends BaseView<LoginPresenter> {
         loginButton.setWidth(10,Unit.PERCENTAGE);
         loginButton.getStyle().set("margin-top","15%").set("font-size","25px");
         loginButton.addClickListener(event -> {
-           loginForm.open();
+           userLoginForm.open();
         });
 
         signupButton=new Button("Signup");
@@ -208,7 +237,13 @@ public class MainView extends BaseView<LoginPresenter> {
            signupForm.open();
         });
 
+        forAdmin=new Button("For Admin");
+        forAdmin.addThemeVariants(ButtonVariant.LUMO_LARGE,ButtonVariant.LUMO_PRIMARY);
+        forAdmin.setWidth(10,Unit.PERCENTAGE);
+        forAdmin.getStyle().set("margin-top","5%").set("font-size","25px");
+        forAdmin.addClickListener(event -> adminLoginForm.open());
 
-        add(heading,loginButton,signupButton);
+
+        add(heading,loginButton,signupButton,forAdmin);
     }
 }
