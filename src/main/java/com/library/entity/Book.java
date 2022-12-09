@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,7 +24,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.SEQUENCE
                     ,generator = "book_sequence")
     @EqualsAndHashCode.Include
-    private Long id;
+    private Long bookId;
     private String title;
     private String author;
     private LocalDate publicationDate;
@@ -32,8 +33,7 @@ public class Book {
     @ManyToOne
     private BookCategory category;
 
-    @ManyToOne
-    @LazyCollection(value =LazyCollectionOption.TRUE)
-    private BookingHistory bookingHistory;
+    @ManyToMany(mappedBy = "books")
+    private List<BookingHistory> bookingHistory;
 
 }

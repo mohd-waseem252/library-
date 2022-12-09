@@ -1,11 +1,13 @@
 package com.library.modules.template;
 
-import com.library.entity.Admin;
 import com.library.entity.User;
-import com.library.modules.admin.grid.UserGridView;
+import com.library.modules.user.grid.BookGrid;
+import com.library.modules.user.grid.MyIssuedBooks;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
@@ -14,6 +16,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinSession;
@@ -31,9 +34,9 @@ public class UserTemplate extends AppLayout {
     private Tab dashboardTab;
 
     private Tab recordsTab;
-    private Tab usersTab;
+    private Tab issuedBooksTab;
     private Tab booksTab;
-    private Tab logoutTab;
+    private Button logoutButton;
 
     public UserTemplate(){
 
@@ -54,18 +57,24 @@ public class UserTemplate extends AppLayout {
         tabs=getTabs();
         addToNavbar(toggle,title,userName);
         setDrawerOpened(false);
-        addToDrawer(tabs);
+        addToDrawer(tabs,logoutButton);
         setContent(content);
     }
 
     private Tabs getTabs() {
         Tabs tabs = new Tabs();
+        logoutButton =new Button("Logout",new Icon(VaadinIcon.EXIT));
+        logoutButton.addThemeVariants(ButtonVariant.LUMO_ICON);
+        logoutButton.getStyle().set("color","white").set("background-color","red");
+        logoutButton.addClickListener(event -> {
+           logoutButton.getUI().ifPresent(ui -> ui.navigate(""));
+        });
 //        dashboardTab = createTab(VaadinIcon.DASHBOARD, "Dashboard");
 //        recordsTab=createTab(VaadinIcon.RECORDS, "Booking History");
-        usersTab= createTab(VaadinIcon.USERS, "Users", UserGridView.class);
-//        booksTab=createTab(VaadinIcon.BOOK, "Books");
+        issuedBooksTab = createTab(VaadinIcon.OPEN_BOOK, "My Issued Books", MyIssuedBooks.class);
+        booksTab=createTab(VaadinIcon.BOOK, "Books", BookGrid.class);
 //        logoutTab=createTab(VaadinIcon.ARROW_RIGHT, "Logout");
-        tabs.add(usersTab
+        tabs.add(booksTab,issuedBooksTab, logoutButton
 //                createTab(VaadinIcon.LIST, "Tasks"),
 //                createTab(VaadinIcon.CHART, "Analytics")
         );

@@ -134,10 +134,10 @@ public class MainView extends BaseView<LoginPresenter> {
         form.addLoginListener(event -> {
             if(loginPresenter.userExists(event.getUsername(),event.getPassword())) {
                 userLoginForm.close();
-                form.getUI().ifPresent(ui -> ui.navigate("home"));
-                Notification.show("Successfully LoggedIn",3000, Notification.Position.TOP_END).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+                form.getUI().ifPresent(ui -> ui.navigate("user/home"));
+                Notification.show("Successfully LoggedIn",1500, Notification.Position.TOP_END).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
             }else{
-                Notification.show("Incorrect Username or Password",3000, Notification.Position.MIDDLE).addThemeVariants(NotificationVariant.LUMO_ERROR);
+                Notification.show("Incorrect Username or Password",1500, Notification.Position.MIDDLE).addThemeVariants(NotificationVariant.LUMO_ERROR);
                 form.setEnabled(true);
             }
         });

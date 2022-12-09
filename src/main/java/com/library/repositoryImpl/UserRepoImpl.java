@@ -1,5 +1,6 @@
-package com.library.Repository;
+package com.library.repositoryImpl;
 
+import com.library.Repository.UserRepo;
 import com.library.entity.User;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,6 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
-public abstract class UserRepoImpl implements UserRepo{
+public abstract class UserRepoImpl implements UserRepo {
 
 }

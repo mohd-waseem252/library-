@@ -5,7 +5,9 @@ import com.library.mvputils.BaseView;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -32,27 +34,20 @@ public class StatsView extends BaseView<StatsPresenter> {
 
     private void setUserStatsLayout() {
         int countOfUsers = getPresenter().getCountOfUsers();
-        Label noOfUsers=new Label("No of User");
-        noOfUsers.getStyle().set("color","black").set("font-weight","bold");
-        Button countButton=new Button();
-        countButton.addThemeVariants(ButtonVariant.LUMO_LARGE);
-        countButton.getStyle().set("color","red").set("background-color","grey");
-        countButton.setWidth(40, Unit.PERCENTAGE);
-        countButton.setHeight(40,Unit.PERCENTAGE);
-        countButton.setText(""+countOfUsers+"");
-        userStatsLayout.add(noOfUsers,countButton);
+        Label title=new Label("No of User");
+        title.getStyle().set("color","black").set("font-size","30px");
+        Span noOfUsers=new Span(""+countOfUsers);
+        noOfUsers.getStyle().set("color","Red").set("font-size","40px").set("font-weight","bold");
+        userStatsLayout.add(title,noOfUsers);
     }
 
     private void setBookStatsLayout() {
         int countOfBooks = getPresenter().getCountOfBooks();
-        Label noOfBooks=new Label("No of Books");
-        noOfBooks.getStyle().set("color","black").set("font-weight","bold");
-        Button countButton=new Button();
-        countButton.getStyle().set("color","red").set("background-color","grey");
-        countButton.setWidth(40, Unit.PERCENTAGE);
-        countButton.setHeight(40,Unit.PERCENTAGE);
-        countButton.setText(""+countOfBooks+"");
-        bookStatsLayout.add(noOfBooks,countButton);
+        Label title=new Label("No of Books");
+        title.getStyle().set("color","black").set("font-size","30px");
+        Span noOfBooks=new Span(""+countOfBooks);
+        noOfBooks.getStyle().set("color","Red").set("font-size","40px").set("font-weight","bold");
+        bookStatsLayout.add(title,noOfBooks);
     }
 
     private void initializeLayout() {

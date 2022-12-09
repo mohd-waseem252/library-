@@ -4,6 +4,7 @@ import com.library.entity.Admin;
 import com.library.modules.admin.grid.BookGridView;
 import com.library.modules.admin.grid.StatsView;
 import com.library.modules.admin.grid.UserGridView;
+import com.library.modules.admin.home.HomeView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -65,14 +66,14 @@ public class AdminTemplate extends AppLayout {
 
     private Tabs getTabs() {
         Tabs tabs = new Tabs();
-//        dashboardTab = createTab(VaadinIcon.DASHBOARD, "Dashboard");
+        dashboardTab = createTab(VaadinIcon.DASHBOARD, "Dashboard", HomeView.class);
 //        recordsTab=createTab(VaadinIcon.RECORDS, "Booking History");
         statsTab=createTab(VaadinIcon.CHART, "Analytics", StatsView.class);
         usersTab= createTab(VaadinIcon.USERS, "Users", UserGridView.class);
         booksTab=createTab(VaadinIcon.BOOK, "Books", BookGridView.class);
 
 //        logoutTab=createTab(VaadinIcon.ARROW_RIGHT, "Logout");
-        tabs.add(usersTab,booksTab,statsTab
+        tabs.add(dashboardTab,usersTab,booksTab,statsTab
 //                createTab(VaadinIcon.LIST, "Tasks"),
 
         );

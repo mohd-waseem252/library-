@@ -1,13 +1,14 @@
-package com.library.service;
+package com.library.serviceImpl;
 
 import com.library.Repository.AdminRepo;
 import com.library.entity.Admin;
+import com.library.service.AdminService;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminServiceImpl implements AdminService{
+public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminRepo adminRepo;
 

@@ -1,7 +1,8 @@
-package com.library.service;
+package com.library.serviceImpl;
 
 import com.library.Repository.UserRepo;
 import com.library.entity.User;
+import com.library.service.UserService;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     UserRepo userRepo;
 

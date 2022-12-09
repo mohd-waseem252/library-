@@ -25,10 +25,11 @@ public class BookingHistory {
                     ,generator = "booking_sequence")
     private Long id;
     private LocalDate bookingDate;
+    private LocalDate dueDate;
     private LocalDate returnDate;
     private Double fineAmount;
 
-    @OneToMany(mappedBy = "bookingHistory")
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private List<Book> books;
 
     @ManyToOne(fetch = FetchType.LAZY)
